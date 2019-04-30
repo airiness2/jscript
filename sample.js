@@ -61,31 +61,29 @@ $(document).ready(function(){
   function get_pass_or_failure(){
     // ここに、全ての教科が60点以上なら"合格"の文字列、一つでも60点未満の教科があったら"不合格"の文字列を出す処理を書き込む
     let subject_points = score_indicate();
-    if (subject_points[0] >= 60) {
-        if (subject_points[1] >= 60) {
-            if (subject_points[2] >= 60) {
-                if (subject_points[3] >= 60) {
-                    if (subject_points[4] >= 60) {
-                        $("#judge").text("合格");
-                        return ("合格")
-                    }
-                }
-            }
-        }
+    if (subject_points[0] >= 60 && subject_points[1] >= 60 && subject_points[2] >= 60 && subject_points[3] >= 60 && subject_points[4] >= 60) {
+        $("#judge").text("合格");
+        return ("合格")
     } else {
-            $("#judge").text("不合格");
-            return ("不合格")
-  }
+        $("#judge").text("不合格");
+        return ("不合格")
+//    if (subject_points.select(|p| p  >= 60).length == subject_points.length) {
+//         return ("合格")
+//    } else {
+//        return ("不合格")
+    }
   };
+  
 
   function judgement(){
     // ここに、「最終ジャッジ」のボタンを押したら「あなたの成績はAです。合格です」といった内容を出力する処理を書き込む
     // 下記の記述をすることで、「最終ジャッジ」のボタンを押すと「あなたの成績は（ここに「ランク」の値を入れる）です。（ここに「判定」の値を入れる）です」という文字の入った水色のフキダシが出力される処理が実装される。
     let evaluation = get_achievement();
     let judge = get_pass_or_failure();
-    
+
+    $('#alert-indicate').remove();    
     $('#declaration').append(`<label id="alert-indicate" class="alert alert-info">あなたの成績は${evaluation}です。${judge}です</label>`);
-    
+
   };
 
   $('#national_language, #english, #mathematics, #science, #society').change(function() {
@@ -97,6 +95,8 @@ $(document).ready(function(){
   });
 
   $('#btn-judge').click(function() {
+//    const result = get_pass_or_failure();
+//    $("#judge").text(result);
     get_pass_or_failure();
   });
 
