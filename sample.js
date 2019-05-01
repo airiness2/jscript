@@ -31,10 +31,10 @@ $(document).ready(function(){
     ave = ave + subject_points[4];
     $("#average_indicate").text(ave / 5); */
     
-    $("#average_indicate").text(sum / 5);
-
     let average = ( sum / 5);
-    return (subject_points, sum, average)
+    $("#average_indicate").text(average);
+
+    return {x: subject_points, z:average}
 
   };
 
@@ -43,13 +43,13 @@ $(document).ready(function(){
     // ここに、ランクの値の文字列（平均点が80点以上なら"A"、60点以上なら"B"、40点以上なら"C"、それ以下なら"D"）を出力する処理を書き込む
     let average = score_indicate();
     
-    if (average >= 80) {
+    if (average.z >= 80) {
         $("#evaluation").text("A");
         return ("A")
-    } else if ( average >= 60) {
+    } else if ( average.z >= 60) {
         $("#evaluation").text("B");
         return ("B")
-    } else if ( average >= 40) {
+    } else if ( average.z >= 40) {
         $("#evaluation").text("C");
         return ("C")
     } else {
@@ -61,12 +61,10 @@ $(document).ready(function(){
   function get_pass_or_failure(){
     // ここに、全ての教科が60点以上なら"合格"の文字列、一つでも60点未満の教科があったら"不合格"の文字列を出す処理を書き込む
     let subject_points = score_indicate();
-    if (subject_points[0] >= 60 && subject_points[1] >= 60 && subject_points[2] >= 60 && subject_points[3] >= 60 && subject_points[4] >= 60) {
-        $("#judge").text("合格");
-        return ("合格")
+    if (subject_points.x[0] >= 60 && subject_points.x[1] >= 60 && subject_points.x[2] >= 60 && subject_points.x[3] >= 60 && subject_points.x[4] >= 60) {
+        return ("合格");
     } else {
-        $("#judge").text("不合格");
-        return ("不合格")
+        return ("不合格");
 //    if (subject_points.select(|p| p  >= 60).length == subject_points.length) {
 //         return ("合格")
 //    } else {
@@ -95,9 +93,8 @@ $(document).ready(function(){
   });
 
   $('#btn-judge').click(function() {
-//    const result = get_pass_or_failure();
-//    $("#judge").text(result);
-    get_pass_or_failure();
+    const result = get_pass_or_failure();
+    $("#judge").text(result);
   });
 
   $('#btn-declaration').click(function() {
